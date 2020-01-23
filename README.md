@@ -22,3 +22,9 @@ If you click any of the hospital row/cell the details (i have mentioned just few
 Note:-
 ->You can click back button in the navigator from second screen to come back to mail screen.
 ->Click cancel button to cancel the search.
+
+
+In case there is any issue with the library (SwiftCSV):
+Go to terminal
+cd <podfile location>
+pod install or pod update
