@@ -31,7 +31,9 @@ class HospitalListViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func fetchData() {
+        //Fetch the data from the file Hospital.csv
         hospitalListDictionary = Service.shared.fetchDataFromFile()
+        //Convert the data to Dictionary format
         hospitalJSONList = convertToDictionary(list: hospitalListDictionary) as? [AnyObject] ?? []
     }
     
@@ -53,11 +55,13 @@ class HospitalListViewController: UIViewController,UITableViewDelegate,UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell") as? HomeListTableViewCell
+        //Filtered List while searching for hospital
         if shouldShowSearchResults {
             cell?.hospitalNameLabel.text = filteredHospitalJSONList[indexPath.row]["OrganisationCode"] as? String
             cell?.hospitalIdLabel.text = filteredHospitalJSONList[indexPath.row]["OrganisationID"] as? String
             cell?.hospitalDescriptionLabel.text = filteredHospitalJSONList[indexPath.row]["OrganisationName"] as? String
         } else {
+            //Original List while searching for hospital
             cell?.hospitalNameLabel.text = hospitalJSONList[indexPath.row]["OrganisationCode"] as? String
             cell?.hospitalIdLabel.text = hospitalJSONList[indexPath.row]["OrganisationID"] as? String
             cell?.hospitalDescriptionLabel.text = hospitalJSONList[indexPath.row]["OrganisationName"] as? String
@@ -71,7 +75,7 @@ class HospitalListViewController: UIViewController,UITableViewDelegate,UITableVi
         } else {
             selectedHospital = (hospitalJSONList[indexPath.row] as? [String : String])!
         }
-
+        //Navigating to the Detail View Controller to list the details of a particular hospital
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let detailViewController = storyBoard.instantiateViewController(withIdentifier: "HospitalDetailViewController") as! HospitalDetailViewController
         detailViewController.hospitalDetails =  selectedHospital
@@ -119,9 +123,7 @@ class HospitalListViewController: UIViewController,UITableViewDelegate,UITableVi
         // If we haven't typed anything into the search bar then do not filter the results
         if customSearchController.customSearchBar.text! != "" {
             filteredHospitalJSONList = hospitalJSONList.filter({
-                // this is where you determine whether to include the specific element, $0
                 ($0["OrganisationCode"]! as AnyObject).contains(searchText.uppercased())
-                // or whatever search method you're using instead
             })
             shouldShowSearchResults = true
         }
