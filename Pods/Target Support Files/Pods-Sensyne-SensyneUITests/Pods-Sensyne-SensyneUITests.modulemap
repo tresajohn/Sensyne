@@ -1,0 +1,6 @@
+framework module Pods_Sensyne_SensyneUITests {
+  umbrella header "Pods-Sensyne-SensyneUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
