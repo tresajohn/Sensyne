@@ -12,6 +12,7 @@ import SwiftCSV
 class Service: NSObject {
     static let shared = Service()
     var hospitalListDictionary : [[String:String]] = []
+    
     func fetchDataFromFile()->[[String:String]] {
         do {
             let resource: CSV? = try CSV(
